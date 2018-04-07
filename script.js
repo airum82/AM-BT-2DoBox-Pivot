@@ -12,7 +12,9 @@ var $ideaList = $('.idea-list');
 $saveInputButton.on('click', addIdeaToList);
 var $ideas = [];
 
-$('ol').on('click', 'li article .up-vote', function() {
+$('ol').on('click', 'li article .up-vote', voteUp);
+
+function voteUp() {
     if ($(this).closest('article').hasClass('article')) {
         $('.q').text('Plausible');
         $(this).closest('article').attr(this.q, 'article-plausible')
@@ -21,9 +23,11 @@ $('ol').on('click', 'li article .up-vote', function() {
         $('.q').text('Genius');
         $(this).closest('article').attr('class', 'article-genius');
     }
-});
+};
 
-$('ol').on('click', 'li article .down-vote', function() {
+$('ol').on('click', 'li article .down-vote', voteDown);
+
+function voteDown() {
     if ($(this).closest('article').hasClass('article-genius')) {
         $('.q').text('Plausible');
         $(this).closest('article').attr('class', 'article-plausible')
@@ -32,20 +36,25 @@ $('ol').on('click', 'li article .down-vote', function() {
         $('.q').text('swill');
         $(this).closest('article').attr('class', 'article');
     }
-});
+};
 
-$('ol').on('click', 'li article .delete-button', function() {
+$('ol').on('click', 'li article .delete-button', removeIdea);
+
+function removeIdea() {
     $(this).closest('article').remove()
-});
+};
 
 
-$(this).on('load', function() {
+$(this).on('load', persistIdeas);
+
+function persistIdeas() {
     var retrievedObject = localStorage.getItem('newIdea');
     var parsedObject = JSON.parse(retrievedObject);
+    $ideas.push(parsedObject);
     parsedObject.forEach(function(obj) {
         toHtml(obj);
     });
-});
+};
 
 function clearForm() {
     $titleInput.val('');
