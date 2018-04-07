@@ -3,11 +3,11 @@ $('.save-button').on('click', addIdeaToList);
 $('ol').on('click', 'li article .up-vote', voteUp);
 
 function voteUp() {
-    if ($(this).closest('article').hasClass('article')) {
+    if ($(this).closest('article').children('p').children('.q').text() === 'swill') {
         $('.q').text('Plausible');
-        $(this).closest('article').attr(this.q, 'article-plausible')
+        $(this).closest('article').addClass('article-plausible')
     } else {
-        ($(this).closest('article').hasClass('article-plausible'))
+        ($(this).closest('article').addClass('article-genius'))
         $('.q').text('Genius');
         $(this).closest('article').attr('class', 'article-genius');
     }
