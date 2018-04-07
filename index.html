@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
-  <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="styles.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Idea Box</title>
-</head>
-<body>
-  <section class="top">
-<header><span class="header-green">idea</span>box</header>
-<main>
-  <fieldset>
-    <form>
-      <input class="title-input" type="text" name="title" placeholder="Title" aria-label="input idea title" required="true">
-      <input class="body-input" type="text" name="body" placeholder="Body" aria-label="input main idea content" required="true">
-      <button class="save-button" aria-label="save idea">save</button>
-    </form>
-  </fieldset>
-</section>
-  <section class="bottom">
-   <fieldset>
-    <form>
-      <input class="search-input" type="text" name="search" placeholder="Search">
-    </form>
-   </fieldset> 
-    <ol class="idea-list">
-    </ol>
-  </section>
-</main>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
-</body>
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Slab:700" rel="stylesheet">
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Idea Box</title>
+  </head>
+  <body>
+    <section class="top">
+      <header><span class="idea-color">idea</span>box</header>
+        <fieldset>
+          <form>
+            <input class="title-input" type="text" name="title" placeholder="Title" aria-label="input idea title" required="true">
+            <input class="body-input" type="text" name="body" placeholder="Body" aria-label="input main idea content" required="true">
+            <button class="save-button" aria-label="save idea">save</button>
+          </form>
+      </fieldset>
+    </section>
+    <section class="bottom">
+      <fieldset>
+        <form>
+          <input class="search-input" type="text" name="search" placeholder="Search" aria-label="input search item">
+        </form>
+      </fieldset> 
+      <ol class="idea-list">
+      </ol>
+    </section>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+  </body>
 </html>
