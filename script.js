@@ -41,7 +41,10 @@ function voteDown() {
 $('ol').on('click', 'li article .delete-button', removeIdea);
 
 function removeIdea() {
-    $(this).closest('article').remove()
+    $(this).closest('article').remove();
+    var ideaId = localStorage.key($(this).parent().attr('id'));
+    localStorage.removeItem(ideaId);
+
 };
 
 
@@ -50,7 +53,6 @@ $(this).on('load', persistIdeas);
 function persistIdeas() {
     var retrievedObject = localStorage.getItem('newIdea');
     var parsedObject = JSON.parse(retrievedObject);
-    $ideas.push(parsedObject);
     parsedObject.forEach(function(obj) {
         toHtml(obj);
     });
@@ -69,18 +71,19 @@ function Idea(title, body, id, quality) {
 };
 
 function addIdeaToList(e) {
+    newId = $.now()
     e.preventDefault();
-    var newIdea = new Idea($titleInput.val(), $bodyInput.val(), $.now())
+    var newIdea = new Idea($titleInput.val(), $bodyInput.val(), newId)
     $ideas.push(newIdea);
     toHtml(newIdea);
-    toLocalStorage();
+    toLocalStorage(newId);
     clearForm();
 };
 
-function toLocalStorage() {
+function toLocalStorage(newId) {
     var objectToStore = $ideas;
     var stringifiedObject = JSON.stringify(objectToStore);
-    localStorage.setItem("newIdea", stringifiedObject);
+    localStorage.setItem(newId, stringifiedObject);
 };
 
 function toHtml(newIdea) {
