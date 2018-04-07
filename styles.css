@@ -3,80 +3,80 @@
      outline: none;
 }
  body {
-     margin: auto;
      box-sizing: border-box;
-     font-family: 'Open Sans', sans-serif;
      color: #6d6e71;
+     font-family: 'Open Sans', sans-serif;
+     margin: auto;
 }
  .top {
      background-color: #e5f3f2;
 }
 /*header styles*/
  header {
-     padding-top: 10px;
-     font-size: 5vw;
      font-family: 'Roboto Slab', serif;
+     font-size: 5vw;
+     padding-top: 10px;
      text-align: center;
 }
  .header-green {
      color: #00a79d;
 }
  h1 {
-     font-family: 'Roboto Slab', serif;
      color: #6d6e71;
+     font-family: 'Roboto Slab', serif;
 }
 /*input field styles*/
  fieldset {
+     border: 0px;
      margin: auto;
      width: 50%;
-     border: 0px;
 }
  input {
+     border: 2px solid #d1d3d4;
      font-family: 'Open Sans', sans-serif;
      font-size: 90%;
-     padding: 5px;
-     margin: 8px auto;
      height: 35px;
-     width: 100%;
-     border: 2px solid #d1d3d4;
+     margin: 8px auto;
      outline: none;
+     padding: 5px;
+     width: 100%;
 }
  input::placeholder {
      color: #d1d3d4;
 }
 /*button styles*/
  .save-button {
-     font-size: 18px;
      background-color: #00a79d;
-     text-align: center;
-     margin: 8px auto;
-     height: 35px;
-     width: 100%;
      border: 0;
      color: #FFFFFF;
+     font-size: 18px;
+     height: 35px;
+     margin: 8px auto;
      outline: none;
+     text-align: center;
+     width: 100%;
 }
 /*idea card styles*/
  .article {
-     height: 170px;
-     color: #939598;
      border-bottom: 1px solid #d1d3d4;
+     color: #939598;
+     height: 170px;
 }
  .article-genius {
-     height: 170px;
-     color: #939598;
      border-bottom: 1px solid #d1d3d4;
+     color: #939598;
+     height: 170px;
 }
  .article-plausible {
-     height: 170px;
-     color: #939598;
      border-bottom: 1px solid #d1d3d4;
+     color: #939598;
+     height: 170px;
 }
  ol {
-     padding-left: 0;
-     margin: 0 auto;
-     width: 48%;
      list-style-type: none;
+     margin: 0 auto;
+     padding-left: 0;
+     width: 48%;
 }
  li {
      margin: auto;
@@ -85,52 +85,52 @@
      font-family: 'Roboto Slab', serif;
 }
  .quality {
-     color: #6d6e71;
-     position: relative;
      bottom: 45px;
+     color: #6d6e71;
      left: 85px;
+     position: relative;
 }
  .up-vote {
-     outline: none;
      background-image: url("images/upvote.svg");
-     background-repeat: no-repeat;
      background-position: center;
+     background-repeat: no-repeat;
      border: none;
-     width: 25px;
      height: 25px;
+     outline: none;
+     width: 25px;
 }
  .up-vote:hover {
-     outline: none;
      background-image: url("images/upvote-hover.svg");
+     outline: none;
 }
  .down-vote {
-     outline: none;
      background-image: url("images/downvote.svg");
-     background-repeat: no-repeat;
      background-position: center;
+     background-repeat: no-repeat;
      border: none;
-     width: 25px;
      height: 25px;
+     outline: none;
+     width: 25px;
 }
  .down-vote:hover {
-     outline: none;
      background-image: url("images/downvote-hover.svg");
+     outline: none;
 }
  .delete-button {
+     background-image: url("images/delete.svg");
+     background-position: center;
+     background-repeat: no-repeat;
+     border: none;
+     height: 25px;
+     left: 95%;
      outline: none;
      position: relative;
-     left: 95%;
      top: 47px;
-     background-image: url("images/delete.svg");
-     background-repeat: no-repeat;
-     background-position: center;
-     border: none;
      width: 25px;
-     height: 25px;
 }
  .delete-button:hover {
-     outline: none;
      background-image: url("images/delete-hover.svg");
+     outline: none;
 }
  @media screen and (max-width: 768px) {
      fieldset {
@@ -140,16 +140,16 @@
          font-size: 10vw;
     }
      ol {
-         width: 80%;
          padding-left: 0;
          margin: 0 auto;
+         width: 80%;
     }
      .body-input {
          height: 100px;
     }
      .body-input::placeholder {
-         position: relative;
          bottom: 30px;
+         position: relative;
     }
 }
  
