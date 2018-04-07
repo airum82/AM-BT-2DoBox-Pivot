@@ -1,16 +1,4 @@
-//input variables
-var $titleInput = $('.title-input');
-var $bodyInput = $('.body-input');
-var $searchInput = $('.search-input');
-//button variables
-var $saveInputButton = $('.save-button');
-var $deleteButton = $('.delete-button');
-var $upVoteButton = $('.up-vote');
-var $downVoteButton = $('.down-vote');
-var $ideaList = $('.idea-list');
-//event listeners 
-$saveInputButton.on('click', addIdeaToList);
-var $ideas = [];
+$('.save-button').on('click', addIdeaToList);
 
 $('ol').on('click', 'li article .up-vote', voteUp);
 
@@ -44,9 +32,7 @@ function removeIdea() {
     $(this).closest('article').remove();
     var ideaId = localStorage.key($(this).parent().attr('id'));
     localStorage.removeItem(ideaId);
-
 };
-
 
 $(this).on('load', persistIdeas);
 
@@ -58,7 +44,7 @@ function persistIdeas() {
     });
 };
 
-function clearForm() {
+function clearForm($titleInput, $bodyInput) {
     $titleInput.val('');
     $bodyInput.val('');
 };
@@ -71,16 +57,19 @@ function Idea(title, body, id, quality) {
 };
 
 function addIdeaToList(e) {
-    newId = $.now()
+    var $ideas = [];
+    var $titleInput = $('.title-input');
+    var $bodyInput = $('.body-input');
+    var newId = $.now()
     e.preventDefault();
     var newIdea = new Idea($titleInput.val(), $bodyInput.val(), newId)
     $ideas.push(newIdea);
     toHtml(newIdea);
-    toLocalStorage(newId);
-    clearForm();
+    toLocalStorage(newId, $ideas);
+    clearForm($titleInput, $bodyInput);
 };
 
-function toLocalStorage(newId) {
+function toLocalStorage(newId, $ideas) {
     var objectToStore = $ideas;
     var stringifiedObject = JSON.stringify(objectToStore);
     localStorage.setItem(newId, stringifiedObject);
