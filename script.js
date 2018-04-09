@@ -4,11 +4,11 @@ $('ol').on('click', 'li article .up-vote', voteUp);
 
 function voteUp() {
     if ($(this).closest('article').children('p').children('.q').text() === 'swill') {
-        $('.q').text('Plausible');
+        $(this).closest('article').children('p').children('.q').text('Plausible');
         $(this).closest('article').addClass('article-plausible')
     } else {
         ($(this).closest('article').addClass('article-genius'))
-        $('.q').text('Genius');
+        $(this).closest('article').children('p').children('.q').text('Genius');
         $(this).closest('article').attr('class', 'article-genius');
     }
 };
@@ -17,11 +17,11 @@ $('ol').on('click', 'li article .down-vote', voteDown);
 
 function voteDown() {
     if ($(this).closest('article').hasClass('article-genius')) {
-        $('.q').text('Plausible');
+        $(this).closest('article').children('p').children('.q').text('Plausible');
         $(this).closest('article').attr('class', 'article-plausible')
     } else {
         ($(this).closest('article').hasClass('article-plausible'))
-        $('.q').text('swill');
+        $(this).closest('article').children('p').children('.q').text('swill');
         $(this).closest('article').attr('class', 'article');
     }
 };
@@ -37,11 +37,16 @@ function removeIdea() {
 $(this).on('load', persistIdeas);
 
 function persistIdeas() {
-    var retrievedObject = localStorage.getItem('newIdea');
-    var parsedObject = JSON.parse(retrievedObject);
-    parsedObject.forEach(function(obj) {
-        toHtml(obj);
-    });
+    // var retrievedObject = localStorage.getItem();
+    // var parsedObject = JSON.parse(retrievedObject);
+    // parsedObject.forEach(function(obj, index) {
+    //     toHtml(obj);
+    for(var i = 0; i < localStorage.length; i++) {
+        var newIdea = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        toHtml(newIdea);
+    }
+
+    // });
 };
 
 function clearForm($titleInput, $bodyInput) {
@@ -57,21 +62,18 @@ function Idea(title, body, id, quality) {
 };
 
 function addIdeaToList(e) {
-    var $ideas = [];
     var $titleInput = $('.title-input');
     var $bodyInput = $('.body-input');
     var newId = $.now()
     e.preventDefault();
     var newIdea = new Idea($titleInput.val(), $bodyInput.val(), newId)
-    $ideas.push(newIdea);
     toHtml(newIdea);
-    toLocalStorage(newId, $ideas);
+    toLocalStorage(newId, newIdea);
     clearForm($titleInput, $bodyInput);
 };
 
-function toLocalStorage(newId, $ideas) {
-    var objectToStore = $ideas;
-    var stringifiedObject = JSON.stringify(objectToStore);
+function toLocalStorage(newId, newIdea) {
+    var stringifiedObject = JSON.stringify(newIdea);
     localStorage.setItem(newId, stringifiedObject);
 };
 
