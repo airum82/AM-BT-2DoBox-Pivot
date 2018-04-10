@@ -132,6 +132,16 @@
      background-image: url("images/delete-hover.svg");
      outline: none;
 }
+
+.completed {
+    border: 0;
+    background-color: #19A69C;
+    color: white;
+}
+
+.completed:hover {
+    transform: scale(1, 2);
+}
  @media screen and (max-width: 768px) {
      fieldset {
          width: 90%;

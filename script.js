@@ -45,8 +45,6 @@ function persistIdeas() {
         var newIdea = JSON.parse(localStorage.getItem(localStorage.key(i)));
         toHtml(newIdea);
     }
-
-    // });
 };
 
 function clearForm($titleInput, $bodyInput) {
@@ -77,16 +75,44 @@ function toLocalStorage(newId, newIdea) {
     localStorage.setItem(newId, stringifiedObject);
 };
 
+$('ol').on('click', 'li article .completed', completeTask);
+
+function completeTask() {
+    $(this).closest('article').children('h1').css('text-decoration', 'line-through');
+}
+
+$('ol').on('click', 'li article .body', editBody);
+
+function editBody() {
+  var newText = $(this).text();
+  var addInput = `<input type="text" value=${newText} class="changeContent">`;
+   if ($(this).children().length === 0) {
+    $(this).text('');
+    $(this).append(addInput);
+    $(this).children().focus();
+  } else {
+    return
+  }
+}
+
+$('ol').on('blur', 'li article .body', updateBody);
+
+function updateBody() {
+
+}
+
 function toHtml(newIdea) {
     $("ol").prepend(`
       <li id="${newIdea.id}">
         <article class="article">
           <button class='delete-button'></button>
           <h1 class="title" contenteditable="true">${newIdea.title}</h1>
-          <p class="body" contenteditable="true">${newIdea.body}</p>
+          <p class="body">${newIdea.body}</p>
           <button id="up" class="up-vote swill"></button>
           <button id="down" class="down-vote swill"></button>
-          <p class="quality"><span class="quality-serif">quality:</span> <span class="q">${newIdea.quality}</span></p>
+          <p class="quality"><span class="quality-serif">quality:</span> <span class="q">${newIdea.quality}</span>
+          <button class="completed">Completed Task</button>
+          </p>
         </article>
       </li>`);
 };
