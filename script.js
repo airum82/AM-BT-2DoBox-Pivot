@@ -26,9 +26,9 @@ function voteDown() {
     }
 };
 
-$('ol').on('click', 'li article .delete-button', removeIdea);
+$('ol').on('click', 'li article .delete-button', removeToDo);
 
-function removeIdea() {
+function removeToDo() {
     $(this).closest('article').remove();
     var ideaId = localStorage.key($(this).parent().attr('id'));
     localStorage.removeItem(ideaId);
@@ -112,6 +112,22 @@ function updateTitle() {
     toDo.title = $(this).text();
     toLocalStorage(retrievedToDo, toDo);
 }
+
+$('.search-input').on('keyup', filterTasks);
+
+function filterTasks() {
+    var searchInput = $(this).val();
+    $('li').map(function(index, el) {
+        var result = $(el);
+        var title = result.children().children('h1').text();
+        var body = result.children().children('.body').text();
+        if(title.includes(searchInput) || body.includes(searchInput)) {
+            return result.show();
+        } else {
+            return result.hide();
+        }
+    })
+};
 
 function toHtml(newIdea) {
 
