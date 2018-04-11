@@ -43,7 +43,7 @@ function persistIdeas() {
     //     toHtml(obj);
     for(var i = 0; i < localStorage.length; i++) {
         var newIdea = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        toHtml(newIdea);
+        toHtml(newIdea);   
     }
 };
 
@@ -78,8 +78,22 @@ function toLocalStorage(newId, newIdea) {
 $('ol').on('click', 'li article .completed', completeTask);
 
 function completeTask() {
-    $(this).closest('article').children('h1').css('text-decoration', 'line-through');
+    $(this).closest('li').addClass('marked-task');
+    $(this).parent().siblings('button').addClass('marked-task');
+    var clickedLi = $(this).closest('li');
+    moveToDone(clickedLi);
 }
+
+function moveToDone(clickedLi) {
+    var attr = clickedLi.prop('class');
+    if(attr === 'marked-task') {
+    var retrievedToDo = clickedLi.prop('id');
+    console.log(retrievedToDo);
+    var toDo = JSON.parse(localStorage.getItem(retrievedToDo));
+    toDo.done = attr;
+    toLocalStorage(retrievedToDo, toDo);
+    } 
+} 
 
 $('ol').on('blur', 'li article .body', updateBody);
 
@@ -90,7 +104,17 @@ function updateBody() {
     toLocalStorage(retrievedToDo, toDo);
 }
 
+$('ol').on('blur', 'li article .title', updateTitle)
+
+function updateTitle() {
+    var retrievedToDo = $(this).parent().parent().attr('id');
+    var toDo = JSON.parse(localStorage.getItem(retrievedToDo));
+    toDo.title = $(this).text();
+    toLocalStorage(retrievedToDo, toDo);
+}
+
 function toHtml(newIdea) {
+
     $("ol").prepend(`
       <li id="${newIdea.id}">
         <article class="article">
@@ -104,4 +128,8 @@ function toHtml(newIdea) {
           </p>
         </article>
       </li>`);
+
+    if(newIdea.done == 'marked-task') {
+        $('li').addClass('done marked-task');
+    }
 };
