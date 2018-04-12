@@ -1,4 +1,4 @@
-$('.save-button').on('click', addIdeaToList);
+$('.save-button').on('click', addTaskToList);
 
 $('ol').on('click', 'li article .up-vote', voteUp);
 
@@ -26,24 +26,20 @@ function voteDown() {
     }
 };
 
-$('ol').on('click', 'li article .delete-button', removeToDo);
+$('ol').on('click', 'li article .delete-button', removeTask);
 
-function removeToDo() {
+function removeTask() {
     $(this).closest('article').remove();
-    var ideaId = localStorage.key($(this).parent().attr('id'));
-    localStorage.removeItem(ideaId);
+    var taskId = localStorage.key($(this).parent().attr('id'));
+    localStorage.removeItem(taskId);
 };
 
-$(this).on('load', persistIdeas);
+$(this).on('load', persistTasks);
 
-function persistIdeas() {
-    // var retrievedObject = localStorage.getItem();
-    // var parsedObject = JSON.parse(retrievedObject);
-    // parsedObject.forEach(function(obj, index) {
-    //     toHtml(obj);
+function persistTasks() {
     for(var i = 0; i < localStorage.length; i++) {
-        var newIdea = JSON.parse(localStorage.getItem(localStorage.key(i)));
-        toHtml(newIdea);   
+        var newTask = JSON.parse(localStorage.getItem(localStorage.key(i)));
+        toHtml(newTask);   
     }
 };
 
@@ -52,26 +48,27 @@ function clearForm($titleInput, $bodyInput) {
     $bodyInput.val('');
 };
 
-function Idea(title, body, id, quality) {
+function Task(title, body, id, quality, done) {
     this.title = title,
     this.body = body,
     this.id = id,
     this.quality = quality || 'swill'
+    this.done = done || ''
 };
 
-function addIdeaToList(e) {
+function addTaskToList(e) {
     var $titleInput = $('.title-input');
     var $bodyInput = $('.body-input');
     var newId = $.now()
     e.preventDefault();
-    var newIdea = new Idea($titleInput.val(), $bodyInput.val(), newId)
-    toHtml(newIdea);
-    toLocalStorage(newId, newIdea);
+    var newTask = new Task($titleInput.val(), $bodyInput.val(), newId)
+    toHtml(newTask);
+    toLocalStorage(newId, newTask);
     clearForm($titleInput, $bodyInput);
 };
 
-function toLocalStorage(newId, newIdea) {
-    var stringifiedObject = JSON.stringify(newIdea);
+function toLocalStorage(newId, newTask) {
+    var stringifiedObject = JSON.stringify(newTask);
     localStorage.setItem(newId, stringifiedObject);
 };
 
@@ -86,31 +83,31 @@ function completeTask() {
 
 function moveToDone(clickedLi) {
     var attr = clickedLi.prop('class');
+    var newStorage = attr + ' done';
     if(attr === 'marked-task') {
-    var retrievedToDo = clickedLi.prop('id');
-    console.log(retrievedToDo);
-    var toDo = JSON.parse(localStorage.getItem(retrievedToDo));
-    toDo.done = attr;
-    toLocalStorage(retrievedToDo, toDo);
+    var retrievedTask = clickedLi.prop('id');
+    var task = JSON.parse(localStorage.getItem(retrievedTask));
+    task.done = newStorage;
+    toLocalStorage(retrievedTask, task);
     } 
 } 
 
 $('ol').on('blur', 'li article .body', updateBody);
 
 function updateBody() {
-    var retrievedToDo = $(this).parent().parent().attr('id');
-    var toDo = JSON.parse(localStorage.getItem(retrievedToDo));
-    toDo.body = $(this).text();
-    toLocalStorage(retrievedToDo, toDo);
+    var retrievedTask = $(this).parent().parent().attr('id');
+    var task = JSON.parse(localStorage.getItem(retrievedTask));
+    task.body = $(this).text();
+    toLocalStorage(retrievedTask, task);
 }
 
 $('ol').on('blur', 'li article .title', updateTitle)
 
 function updateTitle() {
-    var retrievedToDo = $(this).parent().parent().attr('id');
-    var toDo = JSON.parse(localStorage.getItem(retrievedToDo));
-    toDo.title = $(this).text();
-    toLocalStorage(retrievedToDo, toDo);
+    var retrievedTask = $(this).parent().parent().attr('id');
+    var task = JSON.parse(localStorage.getItem(retrievedTask));
+    task.title = $(this).text();
+    toLocalStorage(retrievedTask, task);
 }
 
 $('.search-input').on('keyup', filterTasks);
@@ -129,23 +126,19 @@ function filterTasks() {
     })
 };
 
-function toHtml(newIdea) {
+function toHtml(newTask) {
 
     $("ol").prepend(`
-      <li id="${newIdea.id}">
+      <li id="${newTask.id}" class="${newTask.done}">
         <article class="article">
           <button class='delete-button'></button>
-          <h1 class="title" contenteditable="true">${newIdea.title}</h1>
-          <p class="body" contenteditable="true">${newIdea.body}</p>
+          <h1 class="title" contenteditable="true">${newTask.title}</h1>
+          <p class="body" contenteditable="true">${newTask.body}</p>
           <button id="up" class="up-vote swill"></button>
           <button id="down" class="down-vote swill"></button>
-          <p class="quality"><span class="quality-serif">quality:</span> <span class="q">${newIdea.quality}</span>
+          <p class="quality"><span class="quality-serif">quality:</span> <span class="q">${newTask.quality}</span>
           <button class="completed">Completed Task</button>
           </p>
         </article>
       </li>`);
-
-    if(newIdea.done == 'marked-task') {
-        $('li').addClass('done marked-task');
-    }
 };
